@@ -5,7 +5,7 @@ version = '1.2.0'
 
 setup(name='collective.portlet.tal',
       version=version,
-      description="TAL portlet for Plone 3 and 4",
+      description="TAL portlet for Plone 3, 4 and 5",
       long_description="""\
 This portlet allows you to enter TAL into a text area, which is then executed
 as if it came from a page template\n""" + "\n" + open(os.path.join("docs", "HISTORY.txt")).read() ,

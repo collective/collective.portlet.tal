@@ -1,26 +1,25 @@
-from zope.interface import implements
+from Products.CMFPlone.utils import getFSVersionTuple
+PLONE4 = getFSVersionTuple()[0] <= 4
 
+from zope.interface import implements
 from plone.portlets.interfaces import IPortletDataProvider
 from plone.app.portlets.portlets import base
-
 from zope import schema
-from zope.formlib import form
-
+if PLONE4:
+    from zope.formlib import form
 from collective.portlet.tal import TALPortletMessageFactory as _
-
 from Acquisition import aq_inner, aq_base
-
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 
 class ITALPortlet(IPortletDataProvider):
     """A TAL portlet - allows TAL code to be entered in the browser and
     executed.
     """
-    
+
     title = schema.TextLine(title=_(u"Title"),
                              description=_(u"A title to show in the admin UI"),
                              required=True)
-                             
+
     tal = schema.Text(title=_(u"TAL code"),
                       description=_(u"TAL code which will be executed when the portlet is rendered"),
                       required=True, default=u"""\
@@ -39,7 +38,7 @@ class ITALPortlet(IPortletDataProvider):
     <dd class="portletItem odd">
         Body text
     </dd>
-    
+
     <dd class="portletFooter">
         <span class="portletBotomLeft"></span>
         <span>
@@ -61,7 +60,7 @@ class Assignment(base.Assignment):
         self.pt = ZopePageTemplate(id='__tal_portlet__')
         self.title = title
         self.tal = tal
-        
+
     def _get_tal(self):
         return self.pt.read()
     def _set_tal(self, value):
@@ -69,17 +68,23 @@ class Assignment(base.Assignment):
     tal = property(_get_tal, _set_tal)
 
 class Renderer(base.Renderer):
-    
+
     def render(self):
         context = aq_inner(self.context)
         pt = aq_base(self.data.pt).__of__(context)
         return pt()
-        
+
 class AddForm(base.AddForm):
-    form_fields = form.Fields(ITALPortlet)
+    if PLONE4:
+        form_fields = form.Fields(ITALPortlet)
+    else:
+        schema = ITALPortlet
 
     def create(self, data):
         return Assignment(**data)
 
 class EditForm(base.EditForm):
-    form_fields = form.Fields(ITALPortlet)
+    if PLONE4:
+        form_fields = form.Fields(ITALPortlet)
+    else:
+        schema = ITALPortlet
