@@ -1,6 +1,8 @@
 Changelog
 =========
-
+collective.portlet.tal - 1.2.1
+    - Added Plone 5 compatibility
+    
 collective.portlet.tal - 1.2.0 Released Sep 18, 2012
 --------------------------------------------------------------------------------
 
