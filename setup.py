@@ -31,7 +31,6 @@ as if it came from a page template\n""" + "\n" + open(os.path.join("docs", "HIST
       install_requires=[
           'setuptools',
           'Products.CMFPlone',
-          'Products.PloneTestCase',
       ],
       entry_points="""
       [z3c.autoinclude.plugin]
