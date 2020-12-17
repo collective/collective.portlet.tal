@@ -1,7 +1,7 @@
 from Products.CMFPlone.utils import getFSVersionTuple
 PLONE4 = getFSVersionTuple()[0] <= 4
 
-from zope.interface import implements
+from zope.interface import implementer
 from plone.portlets.interfaces import IPortletDataProvider
 from plone.app.portlets.portlets import base
 from zope import schema
@@ -50,9 +50,8 @@ class ITALPortlet(IPortletDataProvider):
 </dl>
 """)
 
-
+@implementer(ITALPortlet)
 class Assignment(base.Assignment):
-    implements(ITALPortlet)
 
     title = u"" # overrides the readonly property method from the base class
 
