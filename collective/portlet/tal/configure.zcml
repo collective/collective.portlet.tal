@@ -17,6 +17,15 @@
        provides="Products.GenericSetup.interfaces.EXTENSION"
        />
 
+     <genericsetup:registerProfile
+         name="uninstall"
+         title="Uninstall TAL Portlet"
+         directory="profiles/uninstall"
+         description="Uninstalls the TAL Portlet add-on"
+         provides="Products.GenericSetup.interfaces.EXTENSION"
+       />
+
+
      <!-- Register the portlet -->
 
      <!-- If the portlet has no configurable parameters, you can remove
